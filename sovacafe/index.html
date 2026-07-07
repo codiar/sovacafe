@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOVA CAFE | سوفا كافيه</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;800&family=Cinzel:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CORE VARIABLES --- */
+        :root {
+            --primary: #8B9A74; /* SOVA Sage Green */
+            --primary-glow: rgba(139, 154, 116, 0.4);
+            --bg-dark: #0A0807;
+            --bg-surface: #141110;
+            --text-light: #F4F1EB;
+            --text-muted: #A8A196;
+            --gold: #D4AF37;
+            --glass-bg: rgba(20, 17, 16, 0.6);
+            --glass-border: rgba(139, 154, 116, 0.2);
+            --transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+
+        /* --- RESET & TYPOGRAPHY --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+            overflow-y: hidden; /* Hidden during intro */
+            position: relative;
+        }
+
+        .en-text { font-family: 'Cinzel', serif; direction: ltr; display: inline-block; }
+
+        /* --- CINEMATIC INTRO --- */
+        #intro {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: var(--bg-dark);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .drop {
+            position: absolute;
+            top: -20px;
+            width: 8px;
+            height: 15px;
+            background: linear-gradient(to bottom, transparent, var(--primary));
+            border-radius: 50%;
+            opacity: 0;
+            animation: dropFall 1.5s cubic-bezier(0.4, 0, 1, 1) forwards;
+            animation-delay: 0.5s;
+        }
+
+        .ripple {
+            position: absolute;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 10px; height: 10px;
+            border: 2px solid var(--primary);
+            border-radius: 50%;
+            opacity: 0;
+        }
+
+        .intro-logo {
+            opacity: 0;
+            transform: scale(0.9);
+            text-align: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .intro-logo img {
+            width: 180px;
+            border-radius: 50%;
+            box-shadow: 0 0 40px var(--primary-glow);
+            margin-bottom: 20px;
+        }
+
+        .intro-logo h1 {
+            font-family: 'Cinzel', serif;
+            letter-spacing: 10px;
+            font-size: 2.5rem;
+            color: var(--text-light);
+            text-shadow: 0 0 20px var(--primary-glow);
+        }
+
+        .steam-container {
+            position: absolute;
+            bottom: -50px;
+            width: 100%;
+            height: 200px;
+            opacity: 0;
+            filter: blur(15px);
+            pointer-events: none;
+        }
+
+        /* Intro Keyframes */
+        @keyframes dropFall {
+            0% { top: -20px; opacity: 1; transform: scaleY(1); }
+            80% { top: 50%; opacity: 1; transform: scaleY(1.2); }
+            99% { top: 50%; opacity: 0; transform: scaleY(0.5); }
+            100% { top: 50%; opacity: 0; }
+        }
+
+        @keyframes rippleEffect {
+            0% { transform: translate(-50%, -50%) scale(1); opacity: 0.8; }
+            100% { transform: translate(-50%, -50%) scale(40); opacity: 0; }
+        }
+
+        @keyframes steamRise {
+            0% { transform: translateY(0) scale(1); opacity: 0; }
+            50% { opacity: 0.3; }
+            100% { transform: translateY(-150px) scale(2); opacity: 0; }
+        }
+
+        @keyframes fadeInScale {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            background: rgba(10, 8, 7, 0.0);
+            backdrop-filter: blur(0px);
+            transition: var(--transition);
+        }
+
+        nav.scrolled {
+            background: var(--glass-bg);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 15px 50px;
+        }
+
+        .logo-text {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            color: var(--text-light);
+            text-decoration: none;
+            letter-spacing: 5px;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px; right: 0;
+            width: 0%; height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover::after { width: 100%; }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            background: url('https://images.unsplash.com/photo-1497935586351-b67a49e012bf?q=80&w=2000&auto=format&fit=crop') center/cover fixed;
+        }
+
+        #hero::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(45deg, rgba(10,8,7,0.9) 0%, rgba(10,8,7,0.4) 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            text-align: center;
+            z-index: 2;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-size: 4.5rem;
+            margin-bottom: 20px;
+            font-weight: 800;
+            background: linear-gradient(to left, #fff, var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .btn-group { display: flex; gap: 20px; justify-content: center; }
+
+        .btn {
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 1px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(139, 154, 116, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(139, 154, 116, 0.5);
+            background: #7a8865;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border-color: var(--primary);
+            color: var(--text-light);
+        }
+
+        .btn-outline:hover {
+            background: rgba(139, 154, 116, 0.1);
+        }
+
+        /* --- MENU SECTION --- */
+        #menu { padding: 100px 5vw; background: var(--bg-surface); }
+        
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .menu-filters {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            padding: 10px 25px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            transition: var(--transition);
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .menu-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 25px;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        .menu-card::before {
+            content: '';
+            position: absolute;
+            top: 0; right: 0;
+            width: 150px; height: 150px;
+            background: radial-gradient(circle, var(--primary-glow) 0%, transparent 70%);
+            opacity: 0;
+            transition: var(--transition);
+            border-radius: 50%;
+            transform: translate(50%, -50%);
+        }
+
+        .menu-card:hover::before { opacity: 1; }
+
+        .menu-item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            border-bottom: 1px dashed rgba(255,255,255,0.1);
+            padding-bottom: 10px;
+        }
+
+        .menu-title { font-size: 1.4rem; font-weight: 700; }
+        .menu-title-en { font-size: 0.9rem; color: var(--text-muted); display: block; margin-top: 5px; }
+        .menu-price { color: var(--primary); font-weight: 800; font-size: 1.2rem; }
+        
+        .order-btn {
+            width: 100%;
+            margin-top: 20px;
+            padding: 12px;
+            border: none;
+            background: rgba(255,255,255,0.05);
+            color: var(--text-light);
+            border-radius: 10px;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.1rem;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .order-btn:hover {
+            background: #25D366; /* WhatsApp Green */
+            color: #fff;
+        }
+
+        /* --- ABOUT & FEATURES --- */
+        #about { padding: 100px 5vw; display: flex; align-items: center; gap: 50px; }
+        .about-text { flex: 1; }
+        .about-text h2 { font-size: 3rem; color: var(--primary); margin-bottom: 20px; }
+        .about-text p { font-size: 1.2rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px; }
+        
+        .about-image {
+            flex: 1;
+            position: relative;
+        }
+        .about-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            padding: 50px 5vw;
+            background: var(--bg-dark);
+        }
+
+        .feature-card {
+            text-align: center;
+            padding: 40px 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover { transform: translateY(-5px); border-color: var(--primary); }
+        .feature-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; }
+        
+        /* --- FOOTER --- */
+        footer {
+            background: #050404;
+            padding: 60px 5vw 20px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-col h3 { color: var(--primary); margin-bottom: 20px; font-size: 1.5rem; }
+        .footer-col p, .footer-col a { color: var(--text-muted); text-decoration: none; line-height: 2; transition: var(--transition); display: block;}
+        .footer-col a:hover { color: var(--primary); padding-right: 10px; }
+        
+        .social-links { display: flex; gap: 15px; margin-top: 20px; }
+        .social-links a {
+            width: 40px; height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.05);
+            display: flex; justify-content: center; align-items: center;
+            color: var(--text-light);
+            font-size: 1.2rem;
+        }
+        .social-links a:hover { background: var(--primary); color: #fff; padding-right: 0;}
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* --- ANIMATIONS & UTILS --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* Floating elements background */
+        .floating-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; overflow: hidden; }
+        .blob {
+            position: absolute;
+            background: var(--primary-glow);
+            filter: blur(80px);
+            border-radius: 50%;
+            animation: float 10s infinite alternate ease-in-out;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.5); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title { font-size: 3rem; }
+            #about { flex-direction: column; }
+            nav { padding: 20px; }
+            .nav-links { display: none; } /* Add hamburger for mobile in full build */
+        }
+    </style>
+</head>
+<body>
+
+    <div id="intro">
+        <div class="drop" id="coffeeDrop"></div>
+        <div class="ripple" id="coffeeRipple"></div>
+        
+        <div class="intro-logo" id="introLogo">
+            <div style="width: 150px; height: 150px; background-color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 20px; box-shadow: 0 0 30px var(--primary-glow);">
+                <span class="en-text" style="font-size: 2rem; color: #fff;">SOVA</span>
+            </div>
+            <h1>SOVA CAFE</h1>
+        </div>
+        <div class="steam-container" id="steam"></div>
+    </div>
+
+    <div class="floating-bg">
+        <div class="blob" style="top: 20%; left: -10%; width: 300px; height: 300px;"></div>
+        <div class="blob" style="top: 60%; right: -10%; width: 400px; height: 400px; animation-delay: -5s;"></div>
+    </div>
+
+    <nav id="navbar">
+        <a href="#" class="logo-text">SOVA</a>
+        <ul class="nav-links">
+            <li><a href="#hero">الرئيسية</a></li>
+            <li><a href="#menu">المنيو</a></li>
+            <li><a href="#about">قصتنا</a></li>
+            <li><a href="#contact">تواصل معنا</a></li>
+        </ul>
+    </nav>
+
+    <header id="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">تذوق الفخامة في كل قطرة</h1>
+            <p class="hero-subtitle">حيث تلتقي القهوة المختصة بالأجواء الاستثنائية</p>
+            <div class="btn-group">
+                <a href="#menu" class="btn btn-primary">اطلب الآن</a>
+                <a href="#about" class="btn btn-outline">استكشف أكثر</a>
+            </div>
+        </div>
+    </header>
+
+    <section id="menu">
+        <div class="section-header reveal">
+            <h2>قائمة سـوفـا</h2>
+            <p style="color: var(--text-muted); font-size: 1.2rem;">اختر مشروبك المفضل المحضر بشغف</p>
+        </div>
+
+        <div class="menu-filters reveal">
+            </div>
+
+        <div class="menu-grid" id="menuGrid">
+            </div>
+    </section>
+
+    <section class="features-grid">
+        <div class="feature-card reveal">
+            <i class="fa-solid fa-mug-hot feature-icon"></i>
+            <h3>قهوة مختصة</h3>
+            <p style="color: var(--text-muted); margin-top: 10px;">أجود أنواع البن المحمص بعناية.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.1s;">
+            <i class="fa-solid fa-leaf feature-icon"></i>
+            <h3>مكونات طازجة</h3>
+            <p style="color: var(--text-muted); margin-top: 10px;">نستخدم مكونات طبيعية يومياً.</p>
+        </div>
+        <div class="feature-card reveal" style="transition-delay: 0.2s;">
+            <i class="fa-solid fa-couch feature-icon"></i>
+            <h3>أجواء فاخرة</h3>
+            <p style="color: var(--text-muted); margin-top: 10px;">مكان مصمم لراحتك واسترخائك.</p>
+        </div>
+    </section>
+
+    <section id="about">
+        <div class="about-text reveal">
+            <h2>قصة سـوفـا</h2>
+            <p>في سوفا كافيه، لا نقدم مجرد قهوة، بل نصنع تجربة متكاملة. بدأنا رحلتنا بشغف حقيقي لجمع الناس حول كوب قهوة مثالي في بيئة تعكس الفخامة والهدوء.</p>
+            <p>نحرص على أدق التفاصيل، بدءاً من اختيار حبوب البن الفاخرة وصولاً إلى التصميم الداخلي المريح، ليكون سوفا وجهتك الأولى للابتعاد عن ضجيج الحياة.</p>
+        </div>
+        <div class="about-image reveal">
+            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=1000&auto=format&fit=crop" alt="SOVA Cafe Interior">
+        </div>
+    </section>
+
+    <footer id="contact">
+        <div class="footer-content reveal">
+            <div class="footer-col">
+                <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                    <div style="width: 50px; height: 50px; background-color: var(--primary); border-radius: 50%; display: flex; align-items: center; justify-content: center;">
+                        <span class="en-text" style="font-size: 0.8rem; color: #fff;">SOVA</span>
+                    </div>
+                    <h3 style="margin: 0;">SOVA CAFE</h3>
+                </div>
+                <p>ملاذك اليومي للقهوة الفاخرة والأجواء الهادئة.</p>
+            </div>
+            <div class="footer-col">
+                <h3>روابط سريعة</h3>
+                <a href="#hero">الرئيسية</a>
+                <a href="#menu">المنيو</a>
+                <a href="#about">من نحن</a>
+            </div>
+            <div class="footer-col">
+                <h3>تواصل معنا</h3>
+                <p><i class="fa-solid fa-phone" style="color: var(--primary); margin-left: 10px;"></i> +964 XXX XXX XXXX</p>
+                <p><i class="fa-solid fa-location-dot" style="color: var(--primary); margin-left: 10px;"></i> العراق - العنوان المخصص</p>
+                <div class="social-links">
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-whatsapp"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>&copy; 2026 SOVA CAFE. جميع الحقوق محفوظة. | Designed with Luxury</p>
+        </div>
+    </footer>
+
+    <script>
+        // --- 1. CINEMATIC INTRO LOGIC ---
+        document.addEventListener("DOMContentLoaded", () => {
+            const intro = document.getElementById('intro');
+            const drop = document.getElementById('coffeeDrop');
+            const ripple = document.getElementById('coffeeRipple');
+            const logo = document.getElementById('introLogo');
+            const steam = document.getElementById('steam');
+
+            // Sequence Timing
+            setTimeout(() => {
+                drop.style.display = 'none';
+                ripple.style.animation = 'rippleEffect 1.5s ease-out forwards';
+                
+                setTimeout(() => {
+                    logo.style.animation = 'fadeInScale 1.5s ease-out forwards';
+                    steam.style.animation = 'steamRise 4s infinite ease-in-out';
+                    
+                    // Trigger Hero Animations
+                    setTimeout(() => {
+                        intro.style.opacity = '0';
+                        document.body.style.overflowY = 'auto'; // Enable scroll
+                        
+                        setTimeout(() => {
+                            intro.style.display = 'none';
+                            document.querySelector('.hero-title').style.transition = 'all 1s ease';
+                            document.querySelector('.hero-title').style.opacity = '1';
+                            document.querySelector('.hero-title').style.transform = 'translateY(0)';
+                            
+                            document.querySelector('.hero-subtitle').style.transition = 'all 1s ease 0.3s';
+                            document.querySelector('.hero-subtitle').style.opacity = '1';
+                            document.querySelector('.hero-subtitle').style.transform = 'translateY(0)';
+                        }, 1000);
+                    }, 2500); // Time looking at logo
+                }, 400); // Time after ripple starts
+            }, 1900); // Time of drop fall
+        });
+
+        // --- 2. MENU DATA (Extracted from user images) ---
+        const WHATSAPP_NUMBER = "9647892966486"; // Replace with real number
+
+        const menuData = [
+            // Hot Coffee
+            { id: 1, category: "مشروبات ساخنة", nameAr: "كلاسك لاتيه", nameEn: "Classic Latte", price: 4500 },
+            { id: 2, category: "مشروبات ساخنة", nameAr: "زعفران لاتيه", nameEn: "Saffron Latte", price: 5500 },
+            { id: 3, category: "مشروبات ساخنة", nameAr: "سبانش لاتيه", nameEn: "Spanish Latte", price: 4500 },
+            { id: 4, category: "مشروبات ساخنة", nameAr: "كراميل ميكاتو", nameEn: "Caramel Macchiato", price: 4500 },
+            { id: 5, category: "مشروبات ساخنة", nameAr: "موكا", nameEn: "Mocha", price: 4500 },
+            { id: 6, category: "مشروبات ساخنة", nameAr: "كابوتشينو", nameEn: "Cappuccino", price: 4000 },
+            { id: 7, category: "مشروبات ساخنة", nameAr: "فلات وايت", nameEn: "Flat White", price: 4000 },
+            { id: 8, category: "مشروبات ساخنة", nameAr: "راف سوفا", nameEn: "Raf Sova", price: 5000 },
+            { id: 9, category: "مشروبات ساخنة", nameAr: "كورتادو", nameEn: "Cortado", price: 4000 },
+            
+            // Cold Coffee
+            { id: 10, category: "مشروبات باردة", nameAr: "ايس كراميل لاتيه", nameEn: "Ice Caramel Latte", price: 4000 },
+            { id: 11, category: "مشروبات باردة", nameAr: "ايس زعفران لاتيه", nameEn: "Ice Saffron Latte", price: 5500 },
+            { id: 12, category: "مشروبات باردة", nameAr: "ايس كراميل ميكاتو", nameEn: "Ice Caramel Macchiato", price: 4500 },
+            { id: 13, category: "مشروبات باردة", nameAr: "ايس موكا", nameEn: "Ice Mocha", price: 4500 },
+            { id: 14, category: "مشروبات باردة", nameAr: "ايس لاتيه", nameEn: "Ice Latte", price: 4000 },
+            { id: 15, category: "مشروبات باردة", nameAr: "ايس سبانش لاتيه", nameEn: "Ice Spanish Latte", price: 4500 },
+            { id: 16, category: "مشروبات باردة", nameAr: "ايس أمريكانو", nameEn: "Ice Americano", price: 3500 },
+            { id: 17, category: "مشروبات باردة", nameAr: "راف سوفا", nameEn: "Raf Sova", price: 5000 },
+
+            // Tea
+            { id: 18, category: "شاي", nameAr: "شاي عادي", nameEn: "Normal Tea", price: 1500 },
+            { id: 19, category: "شاي", nameAr: "شاي كرك", nameEn: "Karak Tea", price: 3500 },
+            { id: 20, category: "شاي", nameAr: "شاي ديلما", nameEn: "Dilmah Tea", price: 2000 },
+            { id: 21, category: "شاي", nameAr: "ماء", nameEn: "Water", price: 500 },
+
+            // Juices
+            { id: 22, category: "عصائر", nameAr: "برتقال", nameEn: "Orange", price: 4000 },
+            { id: 23, category: "عصائر", nameAr: "ليمون", nameEn: "Lemon", price: 4000 },
+            { id: 24, category: "عصائر", nameAr: "ليمون نعناع", nameEn: "Lemon Mint", price: 4000 },
+            { id: 25, category: "عصائر", nameAr: "فراولة", nameEn: "Strawberry", price: 4000 },
+            { id: 26, category: "عصائر", nameAr: "أناناس", nameEn: "Pineapple", price: 4000 },
+            { id: 27, category: "عصائر", nameAr: "مانجو", nameEn: "Mango", price: 4000 },
+            { id: 28, category: "عصائر", nameAr: "رمان", nameEn: "Pomegranate", price: 4000 },
+            { id: 29, category: "عصائر", nameAr: "كوكتيل", nameEn: "Cocktail", price: 4500 }
+        ];
+
+        // --- 3. RENDER MENU ---
+        const menuGrid = document.getElementById('menuGrid');
+        const filterContainer = document.querySelector('.menu-filters');
+        
+        // Extract Unique Categories
+        const categories = ["الكل", ...new Set(menuData.map(item => item.category))];
+
+        // Create Filter Buttons
+        categories.forEach((cat, index) => {
+            const btn = document.createElement('button');
+            btn.className = `filter-btn ${index === 0 ? 'active' : ''}`;
+            btn.innerText = cat;
+            btn.onclick = () => filterMenu(cat, btn);
+            filterContainer.appendChild(btn);
+        });
+
+        // Generate WhatsApp Link
+        function getWhatsAppLink(item) {
+            const text = `مرحباً SOVA CAFE،%0Aأود طلب:%0A☕ ${item.nameAr} (${item.nameEn})%0A💰 السعر: ${item.price} دينار%0Aالكمية: [أدخل الكمية هنا]`;
+            return `https://wa.me/${WHATSAPP_NUMBER}?text=${text}`;
+        }
+
+        function renderCards(data) {
+            menuGrid.innerHTML = '';
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'menu-card reveal active'; // active immediately for filtered items
+                card.innerHTML = `
+                    <div>
+                        <div class="menu-item-header">
+                            <div>
+                                <span class="menu-title">${item.nameAr}</span>
+                                <span class="menu-title-en en-text">${item.nameEn}</span>
+                            </div>
+                            <span class="menu-price">${item.price} IQD</span>
+                        </div>
+                    </div>
+                    <a href="${getWhatsAppLink(item)}" target="_blank" class="order-btn">
+                        <i class="fa-brands fa-whatsapp"></i> اطلب عبر واتساب
+                    </a>
+                `;
+                menuGrid.appendChild(card);
+            });
+        }
+
+        function filterMenu(category, btnElement) {
+            // Update Active Class
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Filter Data
+            if(category === "الكل") {
+                renderCards(menuData);
+            } else {
+                const filtered = menuData.filter(item => item.category === category);
+                renderCards(filtered);
+            }
+        }
+
+        // Initial Render
+        renderCards(menuData);
+
+        // --- 4. SCROLL EFFECTS & NAVBAR ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // Scroll Reveal Animation via Intersection Observer
+        const revealElements = document.querySelectorAll('.reveal:not(.menu-card)'); // Exclude menu cards from scroll reveal to prevent jumping on filter
+        
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        revealElements.forEach(el => revealObserver.observe(el));
+
+    </script>
+</body>
+</html>
