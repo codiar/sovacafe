@@ -13,6 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         setTimeout(() => {
             logo.style.animation = 'fadeInScale 1.5s ease-out forwards';
+            steam.style.opacity = '1';
             steam.style.animation = 'steamRise 4s infinite ease-in-out';
             
             // Trigger Hero Animations
@@ -35,7 +36,24 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 1900); // Time of drop fall
 });
 
-// --- 2. MENU DATA (Extracted from user images) ---
+// --- 2. MOBILE MENU TOGGLE ---
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.querySelector('.nav-links');
+
+if (hamburger) {
+    hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('active');
+    });
+    
+    // Close menu when a link is clicked
+    navLinks.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', () => {
+            navLinks.classList.remove('active');
+        });
+    });
+}
+
+// --- 3. MENU DATA (Extracted from user images) ---
 const WHATSAPP_NUMBER = "9647892966486"; // Replace with real number
 
 const menuData = [
@@ -77,9 +95,9 @@ const menuData = [
     { id: 29, category: "عصائر", nameAr: "كوكتيل", nameEn: "Cocktail", price: 4500 }
 ];
 
-// --- 3. RENDER MENU ---
+// --- 4. RENDER MENU ---
 const menuGrid = document.getElementById('menuGrid');
-const filterContainer = document.querySelector('.menu-filters');
+const filterContainer = document.getElementById('menuFilters');
 
 // Extract Unique Categories
 const categories = ["الكل", ...new Set(menuData.map(item => item.category))];
@@ -139,7 +157,7 @@ function filterMenu(category, btnElement) {
 // Initial Render
 renderCards(menuData);
 
-// --- 4. SCROLL EFFECTS & NAVBAR ---
+// --- 5. SCROLL EFFECTS & NAVBAR ---
 const navbar = document.getElementById('navbar');
 window.addEventListener('scroll', () => {
     if (window.scrollY > 50) {
