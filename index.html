@@ -1,0 +1,228 @@
+<!--
+تم تطوير هذا المشروع خصيصًا للعميل بواسطة فريق كوديار تك | Codiar Tech.
+هذا الكود من إنتاج كوديار تك ويُرجى عدم إزالة هذه الترويسة حفاظاً على حقوق التطوير.
+Instagram:
+@codiar.tech
+-->
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SOVA CAFE | سوفا كافيه</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- CSS File -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Intro Animation -->
+    <div id="intro">
+        <div class="drop"></div>
+        <div class="ripple"></div>
+        <div class="intro-logo">SOVA CAFE</div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">SOVA</a>
+            
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#hero">الرئيسية</a></li>
+                <li><a href="#menu">المنيو</a></li>
+                <li><a href="#features">مميزاتنا</a></li>
+                <li><a href="#about">عن سوفا</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+
+            <div class="mobile-menu-btn" id="mobile-btn">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="bean" style="top: 20%; left: 10%; animation-delay: 0s;"></div>
+        <div class="bean" style="top: 60%; left: 80%; animation-delay: 1s;"></div>
+        <div class="bean" style="top: 30%; left: 70%; animation-delay: 2s;"></div>
+        <div class="bean" style="top: 80%; left: 20%; animation-delay: 3s;"></div>
+
+        <div class="container hero-content">
+            <h1 class="hero-title">تجربة القهوة المختصة الفاخرة</h1>
+            <p class="hero-subtitle">حيث يلتقي الشغف بالجودة في كل قطرة، نقدم لك أجود أنواع البن المحمص بعناية فائقة.</p>
+            <div class="btn-group">
+                <a href="#menu" class="btn btn-primary"><i class="fas fa-coffee"></i> استكشف المنيو</a>
+                <a href="#contact" class="btn btn-outline"><i class="fas fa-map-marker-alt"></i> فروعنا</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Menu Section -->
+    <section id="menu" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">قائمة سوفا</h2>
+            <p class="section-subtitle reveal">اختر مشروبك المفضل من قائمتنا المميزة</p>
+
+            <div class="menu-categories reveal">
+                <button class="category-btn active" data-filter="all">الكل</button>
+                <button class="category-btn" data-filter="hot">قهوة حارة ☕</button>
+                <button class="category-btn" data-filter="cold">قهوة باردة 🧊</button>
+                <button class="category-btn" data-filter="dessert">حلويات 🍰</button>
+            </div>
+
+            <div class="menu-grid">
+                <!-- Product 1 -->
+                <div class="menu-card glass reveal" data-category="hot">
+                    <img src="https://images.unsplash.com/photo-1578314675249-a6910f80cc4e?auto=format&fit=crop&w=400&q=80" alt="V60" class="menu-img">
+                    <h3 class="menu-title">V60 أثيوبي</h3>
+                    <p class="menu-desc">قهوة مقطرة بعناية، تتميز بإيحاءات الفواكه والزهور لتجربة غنية.</p>
+                    <div class="menu-price">4,500 د.ع</div>
+                    <button class="btn btn-primary btn-order" onclick="orderViaWhatsapp('V60 أثيوبي', '4,500 د.ع')">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </button>
+                </div>
+
+                <!-- Product 2 -->
+                <div class="menu-card glass reveal" data-category="hot">
+                    <img src="https://images.unsplash.com/photo-1585494156145-1c60a4fe952b?auto=format&fit=crop&w=400&q=80" alt="Flat White" class="menu-img">
+                    <h3 class="menu-title">فلات وايت</h3>
+                    <p class="menu-desc">مزيج مثالي من الإسبريسو المكثف والحليب المبخر بقوام مخملي.</p>
+                    <div class="menu-price">4,000 د.ع</div>
+                    <button class="btn btn-primary btn-order" onclick="orderViaWhatsapp('فلات وايت', '4,000 د.ع')">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </button>
+                </div>
+
+                <!-- Product 3 -->
+                <div class="menu-card glass reveal" data-category="cold">
+                    <img src="https://images.unsplash.com/photo-1461023058943-07fcbe16d735?auto=format&fit=crop&w=400&q=80" alt="Iced Latte" class="menu-img">
+                    <h3 class="menu-title">آيسد سبانيش لاتيه</h3>
+                    <p class="menu-desc">مشروب بارد ومنعش مع الحليب المكثف المحلى ونفحة من الفانيلا.</p>
+                    <div class="menu-price">5,000 د.ع</div>
+                    <button class="btn btn-primary btn-order" onclick="orderViaWhatsapp('آيسد سبانيش لاتيه', '5,000 د.ع')">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </button>
+                </div>
+
+                <!-- Product 4 -->
+                <div class="menu-card glass reveal" data-category="cold">
+                    <img src="https://images.unsplash.com/photo-1599305090598-fe179d501227?auto=format&fit=crop&w=400&q=80" alt="Cold Brew" class="menu-img">
+                    <h3 class="menu-title">كولد برو</h3>
+                    <p class="menu-desc">قهوة منقوعة بالماء البارد لمدة 24 ساعة، خالية من الحموضة.</p>
+                    <div class="menu-price">5,500 د.ع</div>
+                    <button class="btn btn-primary btn-order" onclick="orderViaWhatsapp('كولد برو', '5,500 د.ع')">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </button>
+                </div>
+
+                <!-- Product 5 -->
+                <div class="menu-card glass reveal" data-category="dessert">
+                    <img src="https://images.unsplash.com/photo-1588195538326-c5b1e9f80a1b?auto=format&fit=crop&w=400&q=80" alt="Cake" class="menu-img">
+                    <h3 class="menu-title">كيكة العسل الروسية</h3>
+                    <p class="menu-desc">طبقات هشة من كيك العسل الكلاسيكي مع كريمة ناعمة وغنية.</p>
+                    <div class="menu-price">6,000 د.ع</div>
+                    <button class="btn btn-primary btn-order" onclick="orderViaWhatsapp('كيكة العسل الروسية', '6,000 د.ع')">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </button>
+                </div>
+                
+                <!-- Product 6 -->
+                <div class="menu-card glass reveal" data-category="dessert">
+                    <img src="https://images.unsplash.com/photo-1550617931-e17a7b70dce2?auto=format&fit=crop&w=400&q=80" alt="Cookie" class="menu-img">
+                    <h3 class="menu-title">كوكيز شوكولاتة بلجيكية</h3>
+                    <p class="menu-desc">مخبوزة طازجة يومياً، مليئة بقطع الشوكولاتة البلجيكية الذائبة.</p>
+                    <div class="menu-price">3,500 د.ع</div>
+                    <button class="btn btn-primary btn-order" onclick="orderViaWhatsapp('كوكيز شوكولاتة بلجيكية', '3,500 د.ع')">
+                        <i class="fab fa-whatsapp"></i> اطلب الآن
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section id="features" class="section-padding" style="background: rgba(0,0,0,0.3);">
+        <div class="container">
+            <h2 class="section-title reveal">لماذا سوفا؟</h2>
+            <p class="section-subtitle reveal">نهتم بكل التفاصيل لنقدم لك الأفضل</p>
+
+            <div class="features-grid reveal">
+                <div class="feature-card glass">
+                    <i class="fas fa-seedling feature-icon"></i>
+                    <h3>بن مختص فاخر</h3>
+                    <p class="menu-desc">نستورد أجود أنواع البن من أفضل المزارع حول العالم.</p>
+                </div>
+                <div class="feature-card glass">
+                    <i class="fas fa-mug-hot feature-icon"></i>
+                    <h3>باريستا محترفون</h3>
+                    <p class="menu-desc">فريقنا مدرب على أعلى المعايير لضمان كوب قهوة مثالي.</p>
+                </div>
+                <div class="feature-card glass">
+                    <i class="fas fa-couch feature-icon"></i>
+                    <h3>أجواء فخمة</h3>
+                    <p class="menu-desc">تصميم مريح وأنيق يناسب اجتماعاتك أو وقت استرخائك.</p>
+                </div>
+                <div class="feature-card glass">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h3>خدمة سريعة</h3>
+                    <p class="menu-desc">نقدر وقتك، لذلك نحرص على تقديم طلبك بأسرع وقت.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact & Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid reveal">
+                <div>
+                    <h3 class="footer-title">عن SOVA</h3>
+                    <p class="menu-desc">نحن لا نقدم مجرد قهوة، بل نصنع تجربة متكاملة تبدأ من اختيار حبة البن وتمر بالتحميص الدقيق لتنتهي بكوب مثالي بين يديك.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="footer-title">أوقات العمل</h3>
+                    <p class="menu-desc"><i class="far fa-clock"></i> السبت - الخميس: 7:00 صباحاً - 12:00 منتصف الليل</p>
+                    <p class="menu-desc"><i class="far fa-clock"></i> الجمعة: 2:00 ظهراً - 1:00 بعد منتصف الليل</p>
+                </div>
+
+                <div>
+                    <h3 class="footer-title">تواصل معنا</h3>
+                    <p class="menu-desc"><i class="fas fa-map-marker-alt"></i> العراق - الموقع قيد التحديث</p>
+                    <p class="menu-desc"><i class="fas fa-phone"></i> +964 770 000 0000</p>
+                    <p class="menu-desc"><i class="fas fa-envelope"></i> info@sovacafe.com</p>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 SOVA CAFE. جميع الحقوق محفوظة.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript File -->
+    <script src="script.js"></script>
+</body>
+</html>
+<!--
+تم تطوير هذا المشروع خصيصًا للعميل بواسطة فريق كوديار تك | Codiar Tech.
+هذا الكود من إنتاج كوديار تك ويُرجى عدم إزالة هذه الترويسة حفاظاً على حقوق التطوير.
+Instagram:
+@codiar.tech
+-->
