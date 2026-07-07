@@ -94,7 +94,22 @@ body {
     opacity: 0;
     filter: blur(15px);
     pointer-events: none;
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
+
+.steam-particle {
+    width: 20px;
+    height: 20px;
+    background: radial-gradient(circle, rgba(139, 154, 116, 0.6), transparent);
+    border-radius: 50%;
+    animation: steamRise 3s infinite ease-in-out;
+}
+
+.steam-particle:nth-child(1) { animation-delay: 0s; }
+.steam-particle:nth-child(2) { animation-delay: 0.5s; }
+.steam-particle:nth-child(3) { animation-delay: 1s; }
 
 /* Intro Keyframes */
 @keyframes dropFall {
@@ -110,8 +125,8 @@ body {
 }
 
 @keyframes steamRise {
-    0% { transform: translateY(0) scale(1); opacity: 0; }
-    50% { opacity: 0.3; }
+    0% { transform: translateY(0) scale(1); opacity: 0.3; }
+    50% { opacity: 0.5; }
     100% { transform: translateY(-150px) scale(2); opacity: 0; }
 }
 
@@ -173,6 +188,21 @@ nav.scrolled {
 }
 
 .nav-links a:hover::after { width: 100%; }
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background: var(--text-light);
+    border-radius: 3px;
+    transition: var(--transition);
+}
 
 /* --- HERO SECTION --- */
 #hero {
@@ -462,10 +492,57 @@ footer {
     100% { transform: translate(50px, 50px) scale(1.5); }
 }
 
-/* Responsive */
+/* --- RESPONSIVE --- */
 @media (max-width: 768px) {
     .hero-title { font-size: 3rem; }
     #about { flex-direction: column; }
-    nav { padding: 20px; }
-    .nav-links { display: none; } /* Add hamburger for mobile in full build */
-                                               }
+    nav { padding: 15px 20px; }
+    
+    .hamburger { display: flex; }
+    
+    .nav-links {
+        position: absolute;
+        top: 70px;
+        right: 0;
+        width: 100%;
+        flex-direction: column;
+        gap: 0;
+        background: var(--glass-bg);
+        backdrop-filter: blur(15px);
+        border-bottom: 1px solid var(--glass-border);
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+    }
+    
+    .nav-links.active {
+        max-height: 250px;
+        padding: 20px;
+    }
+    
+    .nav-links li {
+        padding: 10px 0;
+    }
+    
+    .btn-group { flex-direction: column; }
+    .btn { width: 100%; }
+    
+    #menu { padding: 50px 5vw; }
+    .menu-grid { grid-template-columns: 1fr; }
+    
+    .menu-filters { gap: 10px; }
+    .filter-btn { padding: 8px 15px; font-size: 0.9rem; }
+    
+    .footer-content { grid-template-columns: 1fr; }
+    
+    .section-header h2 { font-size: 2rem; }
+    .about-text h2 { font-size: 2rem; }
+}
+
+@media (max-width: 480px) {
+    .hero-title { font-size: 2rem; }
+    .intro-logo h1 { font-size: 1.5rem; }
+    nav { padding: 10px; }
+    .logo-text { font-size: 1.2rem; }
+    .section-header h2 { font-size: 1.5rem; }
+}
